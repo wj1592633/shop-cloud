@@ -1,6 +1,6 @@
-```
-*shop-back和shop-portal是前后端分离的，前端写的比较简陋。shop-portal地址 https://github.com/wj1592633/shop-portal
-```
+
+* shop-back和shop-portal是前后端分离的，前端写的比较简陋。shop-portal地址：https://github.com/wj1592633/shop-portal 
+
 ```
 *shop-back是后台服务，里面有些多余的模块，主要是开始考虑用mongodb或者其他东西，后来不用了。
   主要使用到springcloud系列相关部件、redis、rocketmq、mysql、mybatis-plus
