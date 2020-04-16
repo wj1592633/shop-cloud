@@ -1,8 +1,0 @@
-#@SwitchHosts! {"url": null, "icon_idx": 0, "title": "11"}
-# 11
-127.0.0.1 eureka7000.com
-127.0.0.1 eureka7002.com
-127.0.0.1 eureka7003.com
-127.0.0.1 wj159.com
-
-
