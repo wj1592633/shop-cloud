@@ -1,0 +1,72 @@
+spring:
+  application:
+    name: shop-gateway-cloud
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods:
+            - GET
+            - POST
+            - DELETE
+            - PUT
+            - OPTION
+      discovery:
+        locator:
+          enable: true
+      routes:
+        - id: shop-order  #id要唯一，随便写
+          uri: lb://shop-order  #lb://固定，后面是服务在eureka名称
+          predicates:
+            - Path=/order/**
+          # -Header=Authorization,\w+  #要带请求头Authorization，值匹配后面的正则
+        - id: shop-goods  #id要唯一，随便写
+          uri: lb://shop-goods  #lb://固定，后面是服务在eureka名称
+          predicates:
+            - Path=/goods/**
+        - id: shop-goods-sku  #id要唯一，随便写
+          uri: lb://shop-goods  #lb://固定，后面是服务在eureka名称
+          predicates:
+            - Path=/sku/**
+        - id: shop-user1  #id要唯一，随便写
+          uri: lb://shop-user  #lb://固定，后面是服务在eureka名称
+          predicates:
+            - Path=/oauth/**
+        - id: shop-user2  #id要唯一，随便写
+          uri: lb://shop-user  #lb://固定，后面是服务在eureka名称
+          predicates:
+            - Path=/user/**
+
+server:
+  port: 8007
+
+
+#注册服务
+eureka:
+  client:
+    registerWithEureka: true #服务注册开关
+    fetchRegistry: true #服务发现开关
+    serviceUrl: #Eureka客户端与Eureka服务端进行交互的地址，多个中间用逗号分隔
+      #defaultZone: ${EUREKA_SERVER:http://localhost:50101/eureka/,http://localhost:50102/eureka/}
+      #defaultZone: http://localhost:7000/eureka  #注册服务的地址
+       defaultZone: http://localhost:8004/eureka/
+  instance:
+    #使用路由访问81的方法http://geteway-9527.com:9527/consumer-dept-feign-81/consumer/dept/get/3
+    instance-id: ${spring.application.name}:${server.port}
+    prefer-ip-address:  true  #将自己的ip地址注册到Eureka服务中
+    #ip-address: ${IP_ADDRESS:127.0.0.1} #手动写上，eureka就不用解析主机名，我们给他解析好了
+    #instance-id: ${spring.application.name}:${server.port} #指定实例id,别名
+
+# eureka的info页面配置，build.version以$开头结尾，必须再parent工程中配置build
+info:
+  app.name: ${spring.application.name}:${server.port}
+  company.name: x1x.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
+
+
+
+

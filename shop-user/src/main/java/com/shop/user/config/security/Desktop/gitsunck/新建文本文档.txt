@@ -1,0 +1,45 @@
+<div class="change-pic-bg" id="focusmap" style="background-color: rgb(46, 31, 11);" areacode="top_pic">
+        <a id="mapimg" class="change-pic-con" href="http://www.baofeng.com/play/247/play-822247.html" target="_blank" style="background-image: url(&quot;http://zdy.bfimg.com/img/20180313/1380*479_1520922247.jpg&quot;); opacity: 1;" title="摇滚藏獒-国"></a>
+        <p class="loading" style="display: none;" id="loading"><img src="http://static.hd.baofeng.com/images/loading.gif">正在加载中…</p>
+        <div class="change-pic-main">
+          <ul class="change-pic-list" id="mapdata">
+		               <li> 
+				<a data-swit="1" data-color="#f89833" data-pic="http://zdy.bfimg.com/img/20180315/1380*479_1521083319.jpg" title="沙海老兵" alt="沙海老兵" href="/play/441/play-837441.html" target="_blank" class="" style="background-image:url(http://zdy.bfimg.com/img/20180315/135*75_1521083308.jpg);">
+				</a>
+			</li>
+			            <li> 
+				<a data-swit="0" data-color="#505050" data-pic="http://zdy.bfimg.com/img/20180402/1380*479_1522655096.jpg" title="【南极之恋】没离开过-张韶涵" alt="【南极之恋】没离开过-张韶涵" href="http://www.baofeng.com/video/422/video-37-5013422.html" target="_blank" style="background-image:url(http://zdy.bfimg.com/img/20180402/135*75_1522655254.jpg);" class="">
+				</a>
+			</li>
+			            <li> 
+				<a data-swit="0" data-color="#122123" data-pic="http://zdy.bfimg.com/img/20180319/1380*479_1521455771.jpg" title="密战" alt="密战" href="/play/475/play-830475.html" target="_blank" style="background-image:url(http://zdy.bfimg.com/img/20180319/135*75_1521455762.jpg);" class="">
+				</a>
+			</li>
+			            <li> 
+				<a data-swit="1" data-color="#fdcb30" data-pic="http://zdy.bfimg.com/img/20180328/1380*479_1522223439.jpg" title="暴走愚人节宣传片" alt="暴走愚人节宣传片" href="http://www.baofeng.com/video/345/video-37-5034345.html" target="_blank" style="background-image:url(http://zdy.bfimg.com/img/20180328/135*75_1522223534.jpg);" class="">
+				</a>
+			</li>
+			            <li> 
+				<a data-swit="0" data-color="#2e1f0b" data-pic="http://zdy.bfimg.com/img/20180313/1380*479_1520922247.jpg" title="摇滚藏獒-国" alt="摇滚藏獒-国" href="/play/247/play-822247.html" target="_blank" style="background-image:url(http://zdy.bfimg.com/img/20180313/135*75_1520922256.jpg);" class="cur">
+				</a>
+			</li>
+			            <li> 
+				<a data-swit="0" data-color="#1761ac" data-pic="http://zdy.bfimg.com/img/20180313/1380*479_1520908682.jpg" title="突击再突击" alt="突击再突击" href="/play/440/play-837440.html" target="_blank" style="background-image:url(http://zdy.bfimg.com/img/20180313/135*75_1520907722.jpg);" class="">
+				</a>
+			</li>
+			            <li> 
+				<a data-swit="1" data-color="#e5e1de" data-pic="http://zdy.bfimg.com/img/20180312/1380*479_1520850110.jpg" title="后妈的春天" alt="后妈的春天" href="/play/48/play-837048.html" target="_blank" style="background-image:url(http://zdy.bfimg.com/img/20180312/135*75_1520850147.JPG);" class="">
+				</a>
+			</li>
+			            <li> 
+				<a data-swit="0" data-color="#bd0203" data-pic="http://zdy.bfimg.com/img/20180228/1380*479_1519785441.jpg" title="风光大嫁" alt="风光大嫁" href="/play/497/play-836997.html" target="_blank" style="background-image:url(http://zdy.bfimg.com/img/20180228/135*75_1519785445.jpg);" class="">
+				</a>
+			</li>
+			            <li> 
+				<a data-swit="0" data-color="#124a98" data-pic="http://zdy.bfimg.com/img/20180226/1380*479_1519625478.jpg" title="星际特工:千星之城-国" alt="星际特工:千星之城-国" href="/play/336/play-830336.html" target="_blank" style="background-image:url(http://zdy.bfimg.com/img/20180226/135*75_1519625386.jpg);">
+				</a>
+			</li>
+			          </ul>
+        </div>
+      <a data-swit="1" data-color="#f89833" data-pic="http://zdy.bfimg.com/img/20180315/1380*479_1521083319.jpg" title="沙海老兵" alt="沙海老兵" href="/play/441/play-837441.html" target="_blank" class="" style="background-image:url(http://zdy.bfimg.com/img/20180315/135*75_1521083308.jpg);">
+				</a></div>

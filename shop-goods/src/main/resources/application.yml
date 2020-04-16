@@ -1,0 +1,93 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: shop-goods
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/shop?useUnicode=yes&characterEncoding=utf8
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  redis:
+    host: 127.0.0.1
+    password:
+    port: 6379
+    timeout: 50000 # 连接超时时间（毫秒）
+    database: 0 # Redis默认情况下有16个分片，这里配置具体使用的分片，默认是0
+    lettuce:
+      pool:
+        max-active: 8 # 连接池最大连接数（使用负值表示没有限制）默认 8
+        max-wait: -1 # 连接池最大阻塞等待时间（使用负值表示没有限制）默认 -1
+        max-idle: 8 # 连接池中的最大空闲连接默认 8
+        min-idle: 0 # 连接池中的最小空闲连接默认 0
+  #data:
+      #mongodb:
+        #uri: mongodb://127.0.0.1:27017/test
+
+logging:
+  level:
+    com.shop: debug  #springboot使用loggback，默认Info级别输出日志到控制台，配置file会生成文件
+  #path: /usr/log   #指定路径
+  #file: springboot.log  #默认会在shop-order下面生成文件，也可以写成D://springboot.log
+  #向使用自定义的日志配置文件，只需要在类路径下resources添加对应的配置文件，比如logback.xml文件
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-value: 0 # 逻辑已删除值(默认为 0)
+      logic-not-delete-value: 1 # 逻辑未删除值(默认为 1)
+#primarydb:
+#  uniqueResourceName: primary
+#  #xaDataSourceClassName: com.alibaba.druid.pool.xa.DruidXADataSource
+#  xaDataSourceClassName: com.mysql.jdbc.jdbc2.optional.MysqlXADataSource
+#  xaProperties:
+#    url: jdbc:mysql://localhost:3307/shop
+#    user: root
+#    password: root
+#  exclusiveConnectionMode: true
+#  minPoolSize: 3
+#  maxPoolSize: 10
+#  testQuery: select 1 from dual
+rocketmq:
+  producer:
+    group: producer_goods_init
+  name-server: 127.0.0.1:9876
+
+feign:
+  hystrix:
+    enabled: true
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: false
+        isolation:
+          strategy: SEMAPHORE
+#设置feign客户端
+ribbon:
+  ReadTimeout: 5000  #feign的ribbon允许读取数据的最大时间5000毫秒
+  ConnectTimeout: 5000 #允许建立连接的最大时间5000毫秒
+#注册服务
+eureka:
+  client:
+    registerWithEureka: true #服务注册开关
+    fetchRegistry: true #服务发现开关
+    serviceUrl: #Eureka客户端与Eureka服务端进行交互的地址，多个中间用逗号分隔
+      #defaultZone: ${EUREKA_SERVER:http://localhost:50101/eureka/,http://localhost:50102/eureka/}
+      #defaultZone: http://localhost:7000/eureka  #注册服务的地址
+       defaultZone: http://localhost:8004/eureka/
+  instance:
+    prefer-ip-address:  true  #将自己的ip地址注册到Eureka服务中
+    #ip-address: ${IP_ADDRESS:127.0.0.1} #手动写上，eureka就不用解析主机名，我们给他解析好了
+    instance-id: ${spring.application.name}:${server.port} #指定实例id,别名
+
+# eureka的info页面配置，build.version以$开头结尾，必须再parent工程中配置build
+info:
+  app.name: ${spring.application.name}:${server.port}
+  company.name: xx.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$

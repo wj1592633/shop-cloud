@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.goods.mapper.GoodsMapper">
+
+    <!-- 开启二级缓存 -->
+   <!-- <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>-->
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="GoodsResultMap" type="com.shop.entity.Goods">
+        <id column="goods_id" property="goodsId" />
+        <result column="user_id" property="userId" />
+        <result column="name" property="name" />
+        <result column="title" property="title" />
+        <result column="goods_desc" property="goodsDesc" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+    </resultMap>
+
+    <resultMap id="GoodsNSkuResultMap" type="com.shop.entity.Goods" extends="GoodsResultMap">
+        <collection property="goodsSkus" ofType="com.shop.entity.GoodsSku">
+            <id column="sku_id" property="skuId"/>
+            <result column="goods_id" property="goodsId"/>
+            <result column="sku_params" property="skuParams"/>
+            <result column="sku_reserve" property="skuReserve"/>
+            <result column="sku_start_reserve" property="skuStartReserve"/>
+            <result column="price" property="price"/>
+            <result column="picture" property="picture"/>
+            <result column="state" property="state" />
+            <result column="version" property="version" />
+        </collection>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, num, pid, pids, simplename, fullname, tips, version, status
+    </sql>
+    <select id="getGoodsNSkuList" resultMap="GoodsResultMap" parameterType="com.shop.entity.util.PageUtil">
+        SELECT
+        goods_id,
+        name,
+        title,
+        user_id,
+        goods_desc,
+        start_time,
+        end_time
+         FROM
+        tb_goods
+        WHERE
+        start_time &lt; SYSDATE() and SYSDATE() &lt; end_time
+        <if test="keyword != null and keyword != ''">
+            AND (
+            name LIKE #{keyword}
+            OR title LIKE #{keyword}
+            OR goods_desc LIKE #{keyword}
+            )
+        </if>
+        and
+        EXISTS (
+        SELECT
+        1
+        FROM
+        tb_goods a,
+        tb_goods_sku b
+        WHERE
+        a.goods_id = b.goods_id
+        AND b.state = 1
+        )
+        LIMIT #{startRecord},#{size}
+    </select>
+
+    <select id="getGoodsNSkuListCount" resultType="long" parameterType="com.shop.entity.util.PageUtil">
+        SELECT
+        count(1)
+        FROM
+        tb_goods
+        WHERE
+        start_time &lt; SYSDATE() and SYSDATE() &lt; end_time
+        <if test="keyword != null and keyword != ''">
+            AND (
+            name LIKE #{keyword}
+            OR title LIKE #{keyword}
+            OR goods_desc LIKE #{keyword}
+            )
+        </if>
+        and
+        EXISTS (
+        SELECT
+        1
+        FROM
+        tb_goods a,
+        tb_goods_sku b
+        WHERE
+        a.goods_id = b.goods_id
+        AND b.state = 1
+        )
+    </select>
+
+
+    <select id="getALLGoodsNSku" resultMap="GoodsNSkuResultMap">
+        SELECT
+        a.goods_id,
+        a.name,
+        a.title,
+        a.user_id,
+        a.goods_desc,
+        a.start_time,
+        a.end_time,
+        b.sku_id,
+        b.goods_id,
+        b.sku_params,
+        b.price,
+        b.picture,
+        b.sku_reserve,
+        b.sku_start_reserve,
+        b.state,
+        b.version
+        FROM
+        tb_goods a,
+        tb_goods_sku b
+        WHERE
+        a.goods_id = b.goods_id
+        AND b.state = 1
+    </select>
+
+    <select id="getGoodsById" resultMap="GoodsNSkuResultMap">
+          SELECT
+            a.goods_id,
+            a.name,
+            a.title,
+            a.user_id,
+            a.goods_desc,
+            a.start_time,
+            a.end_time,
+            b.sku_id,
+            b.goods_id,
+            b.sku_params,
+            b.price,
+            b.picture,
+            b.sku_reserve,
+            b.sku_start_reserve,
+            b.state,
+            b.version
+          FROM
+            tb_goods a,
+            tb_goods_sku b
+          WHERE
+            a.goods_id = #{id}
+          AND a.goods_id = b.goods_id
+          AND b.state = 1
+    </select>
+</mapper>

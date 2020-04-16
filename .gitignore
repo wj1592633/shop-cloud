@@ -1,0 +1,38 @@
+*.apk
+*.ap_
+  
+# Files for the Dalvik VM
+*.dex
+  
+# Java class files
+*.class
+  
+# Generated files
+*/bin/
+*/gen/
+*/out/
+  
+# Gradle files
+.gradle/
+build/
+*/build/
+gradlew
+gradlew.bat
+  
+# Log Files
+*.log
+  
+# Intellij
+*.iml
+*/*.iml
+   
+#some local files
+*/.settings/
+*/.DS_Store
+.DS_Store
+*/.idea/
+*/target/
+.idea/
+gradlew
+gradlew.bat
+unused.txt
