@@ -91,7 +91,8 @@ create index Index_order_goods_name on tb_order
 /*==============================================================*/
 create table tb_pay_repeat
 (
-   order_id             varchar(36) comment '订单id'
+   order_id             varchar(36) comment '订单id',
+   primary key (order_id)
 );
 
 alter table tb_pay_repeat comment '支付防重表';
