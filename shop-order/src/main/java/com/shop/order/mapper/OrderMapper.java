@@ -25,7 +25,7 @@ public interface OrderMapper extends BaseMapper<Order> {
      * @param pageUtil
      * @return
      */
-    @Select("SELECT order_id, user_id, sku_id, take_time, goods_name, pay_time, pay_price, goods_num, goods_price_per, state FROM tb_order WHERE user_id = #{keyword} LIMIT #{startRecord},#{size}")
+    @Select("SELECT order_id, user_id, sku_id, take_time, goods_name, pay_time, pay_price, goods_num, goods_price_per, state FROM tb_order WHERE user_id = #{keyword} ORDER BY state,take_time asc LIMIT #{startRecord},#{size}")
     public List<Map<String,Object>> getOrderByUserId(PageUtil<Order> pageUtil);
 
     /**

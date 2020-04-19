@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.Enumeration;
 
 
 /**
@@ -31,7 +33,7 @@ public class UserController {
      * @return
      */
    @PostMapping("/oauth/login")
-   public ResponseResult login(User user){
+   public ResponseResult login(User user, HttpServletRequest request){
        if (null == user || StringUtils.isBlank(user.getUsername())
                || StringUtils.isBlank(user.getPassword())
                ){

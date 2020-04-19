@@ -8,7 +8,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="GoodsResultMap" type="com.shop.entity.Goods">
         <id column="goods_id" property="goodsId" />
-        <result column="user_id" property="userId" />
+        <result column="user_id" property="userId" javaType="String" jdbcType="VARCHAR"/>
         <result column="name" property="name" />
         <result column="title" property="title" />
         <result column="goods_desc" property="goodsDesc" />

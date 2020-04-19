@@ -37,6 +37,7 @@ public class Goods implements Serializable {
     /**
      * 用户id
      */
+
     private String userId;
 
     /**

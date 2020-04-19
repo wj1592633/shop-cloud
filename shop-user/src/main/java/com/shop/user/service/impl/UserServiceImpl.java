@@ -122,17 +122,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         if (StringUtils.isBlank(userId))
             throw new CustomException(ExceptionEnum.NEED_LOGIN);
 
-        //应该在这判断该订单是不是自己的订单.其实应该去订单模块查询得到userid再作比较才对
-        if (! loginId.equals(userId)){
-            throw new CustomException(ExceptionEnum.NO_WORK);
-        }
-
         ResponseResult orderByOrderId = orderService.getOrderByOrderId(orderId);
-
+        LinkedHashMap order = null;
         if (orderByOrderId != null && orderByOrderId.getState() == Constant.RESPONSE_CODE_SUCCESS) {
-            LinkedHashMap order = (LinkedHashMap) orderByOrderId.getData();
+            order = (LinkedHashMap) orderByOrderId.getData();
+            //订单表记录的订单所属用户id
+            String oUserId = (String)order.get("userId");
+            //当前登录用户id和oUserId是否相等，不相等说明订单不是该用户的
+            if (! loginId.equals(oUserId)){
+                throw new CustomException(ExceptionEnum.NO_WORK);
+            }
             validOrderById(order);
         }
+
+
         //发送事务消息
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("orderId",orderId);

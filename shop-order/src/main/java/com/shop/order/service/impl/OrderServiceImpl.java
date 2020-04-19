@@ -15,6 +15,7 @@ import com.shop.entity.Order;
 import com.shop.entity.util.PageUtil;
 import com.shop.order.mapper.OrderMapper;
 import com.shop.order.service.IOrderService;
+import com.shop.order.thread.ThreadPoolHolder;
 import com.shop.order.util.SecurityKit;
 import com.shop.order.vo.OderData;
 import com.shop.order.wrapper.OrderWrapper;
@@ -36,7 +37,7 @@ import java.util.Map;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author wj
@@ -45,7 +46,7 @@ import java.util.Map;
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements IOrderService {
 
     @Autowired
-    RedisTemplate<String,Serializable> redisTemplate;
+    RedisTemplate<String, Serializable> redisTemplate;
     @Autowired
     OrderMapper orderMapper;
     @Autowired
@@ -66,16 +67,16 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         //加载lua脚本
         redisScript.setScriptText(RedisScript.REDUCE_SKU_RESERVE);
         List execute = redisTemplate.execute(redisScript, strings, 0);
-        if (execute == null){
+        if (execute == null) {
             throw new CustomException(ExceptionEnum.UNKNOWN_EXCEPTION);
         }
-        Long resultCode =(long)execute.get(0);
+        Long resultCode = (long) execute.get(0);
         //-1表示商品没有库存
-        if (resultCode < 0){
+        if (resultCode < 0) {
             return ResponseResult.fail("该商品已经售光");
         }
         String orderId = IdGenerator.OrderIdGenarate(data.getUserId());
-        transactionTemplate.execute((status)->{
+        transactionTemplate.execute((status) -> {
             int insert = 0;
 
             try {
@@ -87,24 +88,24 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
                         .payTime(null).state(OrderStateEnum.NEED_PAY.getStateNum()).version(1)
                         .build();
                 insert = orderMapper.insert(order);
-            }catch (Exception e){
+            } catch (Exception e) {
                 //插入订单数据出错的话，redis的sku库存+1
                 redisTemplate.boundHashOps(qkey).increment(RedisConstant.SKU_RESERVE, 1);
                 throw e;
             }
-            if (insert < 1){
+            if (insert < 1) {
                 //插入订单数据出错的话，redis的sku库存+1
                 redisTemplate.boundHashOps(qkey).increment(RedisConstant.SKU_RESERVE, 1);
                 throw new CustomException(ExceptionEnum.HAD_BOUGHT);
             }
-           return null;
+            return null;
         });
+
         JSONObject jsonObject = new JSONObject();
         jsonObject.put(Constant.TIME_OUT_ITEM_REDIS_KEY, qkey);
         jsonObject.put(Constant.TIME_OUT_ITEM_DB_SKU_KEY, orderId);
-        //发送延时消息.rocketmq时间固定，delayLevel  1对应1s，5对应1m
-        //delayLevel -> 1s,5s,10s,30s,1m,2m,3m,4m,5m,6m,7m,8m,9m,10m,20m,30m,1h,2h
-        SendResult sendResult = rocketMQTemplate.syncSend(Constant.TXMSG_TOPIC_ORDER_TIME_OUT, MessageBuilder.withPayload(jsonObject.toString()).build(), 3000, 5);
+        //发送订单延时消息，为测试方便，订单设为1min后超时
+        ThreadPoolHolder.doSentOrderTimeoutMsgTask(jsonObject);
         return ResponseResult.ok("下单成功");
     }
 
@@ -113,10 +114,10 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         String userId = SecurityKit.getUserId();
         //用keyword代替id进行查询
         pageUtil.setKeyword(userId);
-        List<Map<String,Object>> orders = orderMapper.getOrderByUserId(pageUtil);
+        List<Map<String, Object>> orders = orderMapper.getOrderByUserId(pageUtil);
         pageUtil.setTotal(orderMapper.getOrderCountByUserId(userId));
         OrderWrapper wrapper = new OrderWrapper(orders);
-        pageUtil.setRecords((List)wrapper.wrap());
+        pageUtil.setRecords((List) wrapper.wrap());
         return pageUtil;
     }
 
