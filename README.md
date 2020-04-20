@@ -1,5 +1,6 @@
 
-* shop-back和shop-portal是前后端分离的，前端写的比较简陋。shop-portal地址：https://github.com/wj1592633/shop-portal 
+* shop-back是前后端分离的，前端(分别使用vue和微信小程序写了2套前端)写的比较简陋。vue前端shop-portal地址：https://github.com/wj1592633/shop-portal ，
+   微信小程序前端地址 https://github.com/wj1592633/shop-mp-portal 
 
 ```
 *shop-back是后台服务，里面有些多余的模块，主要是开始考虑用mongodb或者其他东西，后来不用了。
