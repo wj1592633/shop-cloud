@@ -46,7 +46,7 @@ public class UserController {
            return ResponseResult.fail("账号或密码错误");
        }
    }
-
+    //不应从前端传入userId，实际也没作用
     @GetMapping("/user/pay")
     public ResponseResult payForOrder(String orderId, String userId){
        return userService.prePayForOrder(orderId, userId);
