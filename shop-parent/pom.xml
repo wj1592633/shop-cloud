@@ -43,7 +43,7 @@
         <spring-boot-mapper.version>2.0.2</spring-boot-mapper.version>
         <spring-boot-pagehelper.version>1.2.5</spring-boot-pagehelper.version>
         <springBootAdmin.version>2.0.1</springBootAdmin.version>
-        <mysql.version>5.1.46</mysql.version>
+        <mysql.version>8.0.16</mysql.version>
         <guava.version>25.1-jre</guava.version>
         <nekohtml.version>1.9.22</nekohtml.version>
         <jackson.version>2.9.6</jackson.version>
